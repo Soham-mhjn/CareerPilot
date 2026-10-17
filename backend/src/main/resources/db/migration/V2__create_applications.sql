@@ -1,0 +1,16 @@
+CREATE TABLE IF NOT EXISTS job_application (
+ id BIGSERIAL PRIMARY KEY,
+ owner_id BIGINT NOT NULL REFERENCES app_user(id) ON DELETE CASCADE,
+ company VARCHAR(200) NOT NULL,
+ role VARCHAR(200) NOT NULL,
+ location VARCHAR(255),
+ job_description VARCHAR(12000),
+ posting_url VARCHAR(2000),
+ status VARCHAR(30) NOT NULL DEFAULT 'SAVED',
+ priority VARCHAR(30) NOT NULL DEFAULT 'MEDIUM',
+ source VARCHAR(100),
+ created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+ updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS idx_application_owner ON job_application(owner_id);
+

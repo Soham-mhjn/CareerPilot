@@ -1,0 +1,18 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: careerpilot
+      POSTGRES_USER: careerpilot
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-careerpilot_local}
+    ports:
+      - "5432:5432"
+    volumes:
+      - careerpilot-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U careerpilot -d careerpilot"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+volumes:
+  careerpilot-postgres:
